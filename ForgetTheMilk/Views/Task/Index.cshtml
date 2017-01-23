@@ -1,4 +1,4 @@
-﻿@model List<string>
+﻿@model List<ForgetTheMilk.Models.Task>
 @{
     ViewBag.Title = "Home Page";
 }
@@ -19,7 +19,8 @@
         @foreach (var task in Model)
         {
             <tr>
-                <td>@task</td>
+                <td>@task.Description</td>
+                <td>@(task.DueDate.HasValue ? @task.DueDate.Value.ToShortDateString() : "")</td>
             </tr>
         }
     </tbody>
