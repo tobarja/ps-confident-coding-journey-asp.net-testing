@@ -8,7 +8,7 @@ namespace ForgetTheMilk.Models
         public string Description { get; set; }
         public DateTime? DueDate { get; set; }
 
-        public Task(string task)
+        public Task(string task, DateTime today)
         {
             Description = task;
             var dueDatePattern = new Regex(@"may\s(\d)");
@@ -17,7 +17,11 @@ namespace ForgetTheMilk.Models
             {
                 var dueDate = dueDatePattern.Match(task);
                 var day = Convert.ToInt32(dueDate.Groups[1].Value);
-                DueDate = new DateTime(DateTime.Today.Year, 5, day);
+                DueDate = new DateTime(today.Year, 5, day);
+                if (DueDate < today)
+                {
+                    DueDate = DueDate.Value.AddYears(1);
+                }
             }
         }
     }
