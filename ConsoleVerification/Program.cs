@@ -7,37 +7,52 @@ namespace ConsoleVerification
     {
         static void Main(string[] args)
         {
+            TestDescriptionAndNoDueDate();
+
+            TestMayDueDate();
+            Console.ReadLine();
+        }
+
+        private static void TestDescriptionAndNoDueDate()
+        {
             var input = "Pickup the groceries";
+            Console.WriteLine("Scenario: " + input);
+
             var task = new Task(input);
+
             var descriptionShouldBe = input;
             DateTime? dueDateShouldBe = null;
-            Console.WriteLine("Scenario: " + input);
-            if (descriptionShouldBe == task.Description && dueDateShouldBe == task.DueDate)
-            {
-                Console.WriteLine("SUCCESS");
-            }
-            else
-            {
-                Console.WriteLine("Description: " + task.Description + " should be " + descriptionShouldBe);
-                Console.WriteLine("Due Date: " + task.DueDate + " should be " + dueDateShouldBe);
-                Console.WriteLine("ERROR");
-            }
+            var success = descriptionShouldBe == task.Description && dueDateShouldBe == task.DueDate;
+            var failureMessage = "Description: " + task.Description + " should be " + descriptionShouldBe
+                + Environment.NewLine
+                + "Due Date: " + task.DueDate + " should be " + dueDateShouldBe;
+            PrintOutcome(success, failureMessage);
+        }
 
-            input = "Pickup the groceries may 5";
-            task = new Task(input);
-            dueDateShouldBe = new DateTime(DateTime.Today.Year, 5, 5);
-            Console.WriteLine("Scenario: " + input);
-            if (dueDateShouldBe == task.DueDate)
+        private static void PrintOutcome(bool success, string failureMessage)
+        {
+            if (success)
             {
                 Console.WriteLine("SUCCESS");
             }
             else
             {
-                Console.WriteLine("Description: " + task.Description + " should be " + descriptionShouldBe);
-                Console.WriteLine("Due Date: " + task.DueDate + " should be " + dueDateShouldBe);
-                Console.WriteLine("ERROR");
+                Console.WriteLine("ERROR: ");
+                Console.WriteLine(failureMessage);
             }
-            Console.ReadLine();
+        }
+
+        private static void TestMayDueDate()
+        {
+            var input = "Pickup the groceries may 5";
+            Console.WriteLine("Scenario: " + input);
+
+            var task = new Task(input);
+
+            var dueDateShouldBe = new DateTime(DateTime.Today.Year, 5, 5);
+            var success = dueDateShouldBe == task.DueDate;
+            var failureMessage = "Due Date: " + task.DueDate + " should be " + dueDateShouldBe;
+            PrintOutcome(success, failureMessage);
         }
     }
 }
