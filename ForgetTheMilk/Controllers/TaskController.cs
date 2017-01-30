@@ -1,4 +1,5 @@
-﻿using ForgetTheMilk.Models;
+﻿using ForgetTheMilk.BusinessLogic;
+using ForgetTheMilk.Models;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -17,7 +18,7 @@ namespace ForgetTheMilk.Controllers
         [HttpPost]
         public ActionResult Add(string task)
         {
-            var newTask = new Task(task, DateTime.Today);
+            var newTask = new Task(task, DateTime.Today, new LinkValidator());
             Tasks.Add(newTask);
             return RedirectToAction("Index");
         }
